@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="text-center my-8">
+        <div class="text-lg">Add products to get a special deal!</div>
+        <div class="mt-6">
+            <form>
+                <div class="flex justify-center gap-5">
+                    <select name="add-product" class="p-2 rounded bg-blue-200 w-40">
+                        <option value="1">product 1</option>
+                        <option value="2">product 2</option>
+                        <option value="3">product 3</option>
+                        <option value="4">product 4</option>
+                    </select>
+                    <button type="submit" class="bg-gray rounded p-2 bg-blue-200">
+                        Adicionar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
