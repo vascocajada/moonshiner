@@ -5,13 +5,13 @@ services:
         build:
             context: ./php-fpm
         volumes:
-            - ../src:/var/www
+            - ../www:/var/www
 
     nginx:
         build:
             context: ./nginx
         volumes:
-            - ../src:/var/www
+            - ../www:/var/www
             - ./nginx/nginx.conf:/etc/nginx/nginx.conf
             - ./nginx/sites/:/etc/nginx/sites-available
             - ./nginx/conf.d/:/etc/nginx/conf.d
@@ -25,7 +25,7 @@ services:
         build:
             context: ./database
         environment:
-            - MYSQL_DATABASE=mydb
-            - MYSQL_USER=myuser
-            - MYSQL_PASSWORD=secret
-            - MYSQL_ROOT_PASSWORD=docker
+            - MYSQL_DATABASE=moonshiner_db
+            - MYSQL_USER=moonshiner
+            - MYSQL_PASSWORD=moonshiner
+            - MYSQL_ROOT_PASSWORD=secret
