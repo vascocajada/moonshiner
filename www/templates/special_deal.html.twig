@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="mt-6 uppercase font-bold">Add products to get a special deal!</div>
+    <div class="mt-6">
+        <div class="flex justify-center items-center gap-5">
+            <form action="{{ url('add_product', {idMember: member.id}) }}" method="post">
+                <select name="add-product" class="p-2 rounded bg-blue-200 w-40">
+                    {% for product in products %}
+                        {% if product.name != 'OneHoodieFree' %}
+                            <option value="{{ product.id }}">{{ product.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <button type="submit" class="rounded p-2 bg-blue-200">
+                    add
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="mt-10">
+        <div class="grid grid-cols-3 justify-center py-2 gap-4">
+            <hr class="col-span-3">
+            <div class="font-bold">ID</div>
+            <div class="font-bold">Name</div>
+            <div class="font-bold">Price</div>
+            <hr class="col-span-3">
+            {% for cart in carts %}
+                <div>
+                    {{ cart.id }}
+                </div>
+                <div>
+                    {{ cart.product.name }}
+                </div>
+                <div>
+                    {{ cart.product.price }}
+                </div>
+                <hr class="col-span-3">
+            {% endfor %}
+            <div class="col-start-3">
+                <div class="font-bold uppercase">total</div>
+                <div>{{ total }}</div>
+            </div>
+        </div>
+        <form action="{{ url('checkout', {idMember: member.id}) }}" method="post" class="mt-10">
+            <div class="grid grid-cols-3">
+                <div class="flex gap-2 justify-end items-center">
+                    <div class="font-bold">voucher:</div>
+                    <input name="voucher-code" type="text" class="p-2 rounded bg-blue-200"/>
+                </div>
+                <div class="">
+                    <button  class="rounded p-2 bg-blue-200" type="submit">checkout</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

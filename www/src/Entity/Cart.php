@@ -27,6 +27,18 @@ class Cart
      */
     private $id_product;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Member::class, inversedBy="carts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $member;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="carts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $product;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +64,30 @@ class Cart
     public function setIdProduct(int $id_product): self
     {
         $this->id_product = $id_product;
+
+        return $this;
+    }
+
+    public function getMember(): ?Member
+    {
+        return $this->member;
+    }
+
+    public function setMember(?Member $member): self
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }

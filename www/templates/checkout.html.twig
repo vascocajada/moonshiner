@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="mt-6 uppercase font-bold">order info</div>
+    <div class="mt-6">
+        <div class="grid grid-cols-3 justify-center py-2 gap-4">
+            <hr class="col-span-3">
+            <div class="font-bold">ID</div>
+            <div class="font-bold">Name</div>
+            <div class="font-bold">Price</div>
+            <hr class="col-span-3">
+            {% for orderDetail in orderDetails %}
+                <div>
+                    {{ orderDetail.id }}
+                </div>
+                <div>
+                    {{ orderDetail.product.name }}
+                </div>
+                <div>
+                    {{ orderDetail.product.price }}
+                </div>
+                <hr class="col-span-3">
+            {% endfor %}
+            <div class="col-start-3">
+                <div class="font-bold uppercase">total</div>
+                <div>{{ orderPaid.total }}</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

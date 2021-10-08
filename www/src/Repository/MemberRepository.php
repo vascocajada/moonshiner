@@ -47,4 +47,19 @@ class MemberRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getCartTotal($idMember): int
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT sum(p.price) FROM product p
+            JOIN cart c on c.product_id = p.id
+            WHERE c.member_id = :idMember
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['idMember' => $idMember]);
+
+        return $stmt->getResult();
+    }
 }
