@@ -37,8 +37,12 @@ cd /var/www/ && php ./vendor/bin/phpunit
 ### About
 
 I chose challenge #2 - PHP eCommerce Rule Engine
+
 I tried to keep this as simple as possible and just show off a basic SF5 setup.
+
 It looked like a good occasion to explore Doctrine and the model relationships, so I put some together.
+
 As requested, I wrote a basic test suite that runs on demand.
+
 You might have noticed, but I set up an environment with docker so that we can easily run the code accross different machines and because there's no reason to just run servers locally anymore :P
 
