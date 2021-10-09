@@ -1,0 +1,11 @@
+ruleA: 
+    cartsCount: 4
+    orderCount: 0
+ruleC:
+    orderCount: 0
+    voucherCode: OneHoodie
+ruleD:
+    voucherCode: Welcome1337
+ruleE:
+    productA: 1
+    productB: 2

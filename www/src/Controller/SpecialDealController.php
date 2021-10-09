@@ -130,11 +130,12 @@ class SpecialDealController extends AbstractController
 
         $orderPaidsCount = $member->getOrderPaids()->count();
 
-        $total = \DealRules::checkA($carts->count(), $orderPaidsCount, $total);
-        $total = \DealRules::checkB($prettyCarts, $total);
-        $newVoucherCode = \DealRules::checkC($orderPaidsCount);
-        $total = \DealRules::checkD($voucherCode, $total);
-        $total = \DealRules::checkE($prettyCarts, $total);
+        $dealRules = new \DealRules();
+        $total = $dealRules->checkA($carts->count(), $orderPaidsCount, $total);
+        $total = $dealRules->checkB($prettyCarts, $total);
+        $newVoucherCode = $dealRules->checkC($orderPaidsCount);
+        $total = $dealRules->checkD($voucherCode, $total);
+        $total = $dealRules->checkE($prettyCarts, $total);
 
 
         $orderPaid = new OrderPaid();

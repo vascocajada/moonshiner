@@ -1,17 +1,26 @@
 <?php
 
+use Symfony\Component\Yaml\Yaml;
+
 class DealRules
 {
-    public static function checkA($cartsCount, $orderCount, $total)
+    private $rules = [];
+
+    public function __construct()
     {
-        if ($cartsCount > 4 && $orderCount > 0) {
+        $this->rules = Yaml::parseFile(__DIR__.'/../../config/rules.yaml');
+    }
+
+    public function checkA($cartsCount, $orderCount, $total)
+    {
+        if ($cartsCount > $this->rules['ruleA']['cartsCount'] && $orderCount > $this->rules['ruleA']['orderCount']) {
             $total = max(0, $total -5);
         }
 
         return $total;
     }
 
-    public static function checkB($carts, $total)
+    public function checkB($carts, $total)
     {
         $productIdsFound = [];
         foreach($carts as $key => $cart) {
@@ -27,30 +36,30 @@ class DealRules
         return $total;
     }
 
-    public static function checkC($orderCount)
+    public function checkC($orderCount)
     {
-        if ($orderCount > 0) {
-            return 'OneHoodie';
+        if ($orderCount > $this->rules['ruleC']['orderCount']) {
+            return $this->rules['ruleC']['voucherCode'];
         }
         return '';
     }
 
-    public static function checkD($voucherCode, $total)
+    public function checkD($voucherCode, $total)
     {
-        if ($voucherCode == 'Welcome1337') { $total = 0; }
+        if ($voucherCode == $this->rules['ruleD']['voucherCode']) { $total = 0; }
         return $total;
     }
 
-    public static function checkE($carts, $total)
+    public function checkE($carts, $total)
     {
         foreach($carts as $cart) {
-            if ($cart['product_id'] == 1) {
+            if ($cart['product_id'] == $this->rules['ruleE']['productA']) {
                 $total = $total - $cart['product_price'];
-                return $total;
+                return max(0, $total);
             }
-            if ($cart['product_id'] == 2) {
+            if ($cart['product_id'] == $this->rules['ruleE']['productB']) {
                 $total = $total - $cart['product_price'];
-                return $total;
+                return max(0, $total);
             }
         }
 

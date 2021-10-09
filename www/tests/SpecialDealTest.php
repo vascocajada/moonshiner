@@ -9,22 +9,24 @@ final class SpecialDealTest extends KernelTestCase
     public function testA(): void
     {
         static::bootKernel();
+        $dealRules = new \DealRules();
 
-        $total = \DealRules::checkA(3, 0, 10);
+        $total = $dealRules->checkA(3, 0, 10);
         $this->assertSame(10, $total);
 
-        $total = \DealRules::checkA(5, 0, 10);
+        $total = $dealRules->checkA(5, 0, 10);
         $this->assertSame(10, $total);
 
-        $total = \DealRules::checkA(5, 1, 10);
+        $total = $dealRules->checkA(5, 1, 10);
         $this->assertSame(5, $total);
     }
 
     public function testB(): void
     {
         static::bootKernel();
+        $dealRules = new \DealRules();
 
-        $total = \DealRules::checkB([
+        $total = $dealRules->checkB([
             [
                 'product_id' => 1,
                 'product_price' => 10
@@ -40,7 +42,7 @@ final class SpecialDealTest extends KernelTestCase
         ], 60);
         $this->assertSame(60, $total);
 
-        $total = \DealRules::checkB([
+        $total = $dealRules->checkB([
             [
                 'product_id' => 1,
                 'product_price' => 10
@@ -60,33 +62,36 @@ final class SpecialDealTest extends KernelTestCase
     public function testC(): void
     {
         static::bootKernel();
+        $dealRules = new \DealRules();
 
-        $voucherCode = \DealRules::checkC(1);
+        $voucherCode = $dealRules->checkC(1);
         $this->assertSame('OneHoodie', $voucherCode);
 
-        $voucherCode = \DealRules::checkC(0);
+        $voucherCode = $dealRules->checkC(0);
         $this->assertSame('', $voucherCode);
     }
 
     public function testD(): void
     {
         static::bootKernel();
+        $dealRules = new \DealRules();
 
-        $total = \DealRules::checkD('asd', 100);
+        $total = $dealRules->checkD('asd', 100);
         $this->assertSame(100, $total);
 
-        $total = \DealRules::checkD('foo', 40);
+        $total = $dealRules->checkD('foo', 40);
         $this->assertSame(40, $total);
 
-        $total = \DealRules::checkD('Welcome1337', 100);
+        $total = $dealRules->checkD('Welcome1337', 100);
         $this->assertSame(0, $total);
     }
 
     public function testE(): void
     {
         static::bootKernel();
+        $dealRules = new \DealRules();
 
-        $total = \DealRules::checkE([
+        $total = $dealRules->checkE([
             [
                 'product_id' => 1,
                 'product_price' => 10
@@ -102,7 +107,7 @@ final class SpecialDealTest extends KernelTestCase
         ], 50);
         $this->assertSame(40, $total);
 
-        $total = \DealRules::checkE([
+        $total = $dealRules->checkE([
             [
                 'product_id' => 3,
                 'product_price' => 30
@@ -118,7 +123,7 @@ final class SpecialDealTest extends KernelTestCase
         ], 70);
         $this->assertSame(70, $total);
 
-        $total = \DealRules::checkE([
+        $total = $dealRules->checkE([
             [
                 'product_id' => 1,
                 'product_price' => 10

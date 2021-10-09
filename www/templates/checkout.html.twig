@@ -27,10 +27,12 @@
             </div>
         </div>
     </div>
-    <div class="mt-6">
-        <div class="font-bold uppercase">you won a new voucher to use on your next purchase!</div>
-        <div class="flex justify-center mt-2">
-            <div class="rounded p-4 bg-blue-200 uppercase text-sm">{{ newVoucherCode }}</div>
+    {% if newVoucherCode != '' %}
+        <div class="mt-6">
+            <div class="font-bold uppercase">you won a new voucher to use on your next purchase!</div>
+            <div class="flex justify-center mt-2">
+                <div class="rounded p-4 bg-blue-200 uppercase text-sm">{{ newVoucherCode }}</div>
+            </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
