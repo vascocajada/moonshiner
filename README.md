@@ -44,5 +44,5 @@ It looked like a good occasion to explore Doctrine and the model relationships, 
 
 As requested, I wrote a basic test suite that runs on demand.
 
-You might have noticed, but I set up an environment with docker so that we can easily run the code accross different machines and because there's no reason to just run servers locally anymore :P
+You might have noticed, but I set up an environment with docker so that we can easily run the code accross different machines, and because there's no reason to just run servers locally anymore :P
 
