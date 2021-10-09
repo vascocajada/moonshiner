@@ -60,6 +60,23 @@ class MemberRepository extends ServiceEntityRepository
         $stmt = $conn->prepare($sql);
         $stmt->execute(['idMember' => $idMember]);
 
-        return $stmt->getResult();
+        $result = $stmt->fetchOne();
+
+        return (int)$result;
+    }
+
+    public function emptyCart($idMember): int
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            DELETE FROM cart WHERE member_id = :idMember
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['idMember' => $idMember]);
+
+        $result = $stmt->fetchOne();
+
+        return (int)$result;
     }
 }

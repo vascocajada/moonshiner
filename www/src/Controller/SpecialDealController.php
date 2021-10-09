@@ -12,6 +12,7 @@ use App\Repository\ProductRepository;
 use App\Repository\CartRepository;
 use App\Repository\MemberRepository;
 use App\Repository\OrderPaidRepository;
+use App\Repository\OrderDetailRepository;
 
 use App\Entity\Cart;
 use App\Entity\OrderPaid;
@@ -103,6 +104,7 @@ class SpecialDealController extends AbstractController
         ProductRepository $productRepository,
         MemberRepository $memberRepository,
         OrderPaidRepository $orderPaidRepository,
+        OrderDetailRepository $orderDetailRepository,
         EntityManagerInterface $entityManager,
         $idMember
     )
@@ -124,13 +126,19 @@ class SpecialDealController extends AbstractController
 
         $total = $memberRepository->getCartTotal($idMember);
 
+        $prettyCarts = $this->prettifyCarts($carts);
+
         $orderPaidsCount = $member->getOrderPaids()->count();
-        var_dump($orderPaidsCount);
-        die($orderPaidsCount);
-        $total = \DealRules::checkA($carts->count(), $orderPaidsCount);
+
+        $total = \DealRules::checkA($carts->count(), $orderPaidsCount, $total);
+        $total = \DealRules::checkB($prettyCarts, $total);
+        $newVoucherCode = \DealRules::checkC($orderPaidsCount);
+        $total = \DealRules::checkD($voucherCode, $total);
+        $total = \DealRules::checkE($prettyCarts, $total);
+
 
         $orderPaid = new OrderPaid();
-        $orderPaid->setIdMember($idMember);
+        $orderPaid->setMember($member);
         $orderPaid->setTotal($total);
 
         $entityManager->persist($orderPaid);
@@ -144,14 +152,31 @@ class SpecialDealController extends AbstractController
             $orderDetail->setProduct($cart->getProduct());
 
             $entityManager->persist($orderDetail);
-            $entityManager->flush();
         }
+        $entityManager->flush();
+
+        $orderDetails = $orderDetailRepository->findByOrderPaidId($orderPaid->getId());
 
         $total = $memberRepository->emptyCart($idMember);
 
         return $this->render('checkout.html.twig', [
             'orderPaid' => $orderPaid,
-            'orderDetails' => $orderPaid->getOrderDetails()
+            'orderDetails' => $orderDetails,
+            'newVoucherCode' => $newVoucherCode
         ]);
+    }
+
+    private function prettifyCarts($carts)
+    {
+        $prettyCarts = [];
+
+        foreach($carts as $cart) {
+            $prettyCarts[] = [
+                'product_price' => $cart->getProduct()->getPrice(),
+                'product_id' => $cart->getProduct()->getId()
+            ];
+        }
+
+        return $prettyCarts;
     }
 }

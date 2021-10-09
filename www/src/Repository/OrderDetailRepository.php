@@ -47,4 +47,25 @@ class OrderDetailRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+    * @return OrderDetail[] Returns an array of OrderDetail objects
+    */
+    public function findByOrderPaidId($orderPaidId)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT *
+            FROM order_detail
+            JOIN product ON product.id = order_detail.product_id
+            WHERE order_paid_id = :orderPaidId
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['orderPaidId' => $orderPaidId]);
+
+        $result = $stmt->fetchAllAssociative();
+
+        return $result;
+    }
 }

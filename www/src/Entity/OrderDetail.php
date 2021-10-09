@@ -18,41 +18,45 @@ class OrderDetail
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=OrderPaid::class, inversedBy="order_details")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $id_order;
+    private $order_paid;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="order_details")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $id_product;
+    private $product;
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdOrder(): ?int
+    public function getOrderPaid(): ?OrderPaid
     {
-        return $this->id_order;
+        return $this->order_paid;
     }
 
-    public function setIdOrder(int $id_order): self
+    public function setOrderPaid(?OrderPaid $orderPaid): self
     {
-        $this->id_order = $id_order;
+        $this->order_paid = $orderPaid;
 
         return $this;
     }
 
-    public function getIdProduct(): ?int
+    public function getProduct(): ?Product
     {
-        return $this->id_product;
+        return $this->product;
     }
 
-    public function setIdProduct(int $id_product): self
+    public function setProduct(?Product $product): self
     {
-        $this->id_product = $id_product;
+        $this->product = $product;
 
         return $this;
     }
+
 }
